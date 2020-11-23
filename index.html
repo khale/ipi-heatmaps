@@ -27,7 +27,7 @@ const machines_url = "https://khale.github.io/ipi-heatmaps/machines/machines.jso
 
 $.getJSON(machines_url, function (d) {
     $.each(d, function(key, entry) {
-        dropdown.append($('<option></option>').attr('value', entry).text(entry));
+        dropdown.append($('<option></option>').attr('value', entry.file).text(entry.name));
     })
 });
 
@@ -67,15 +67,12 @@ d3.csv("https://gist.githubusercontent.com/khale/93c24b5583c48f254446629ad888c22
         }; })
     .map(data);
 
-    console.log(latsByCores.get(0).get(1)['med'])
-
     // find min,max
     var min = Number.MAX_SAFE_INTEGER;
     var max = 0;
 
     for (var i = 0; i < myGroups.length; i++) {
         for (var j = 0; j < myVars.length; j++) {
-            console.log(i + ':' + j)
             if (i == j) continue;
             var val = latsByCores.get(i).get(j)['med'];
             if (val < min) { min = val; }
@@ -150,7 +147,6 @@ d3.csv("https://gist.githubusercontent.com/khale/93c24b5583c48f254446629ad888c22
   }
 
 
-  console.log(latsByCores)
   // add the squares
   svg.selectAll()
         .data(data, function(d) { return d.sc + ':' + d.dc})
