@@ -4,13 +4,33 @@
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 
+<select id="machine-dropdown" name="machines">
+</select>
+
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
 
+
 <!-- Load color palettes -->
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
 <script>
+
+
+let dropdown = $('#machine-dropdown')
+dropdown.empty()
+dropdown.append('<option selected="true" disabled>Choose Machine</option>');
+dropdown.prop('selectedIndex', 0);
+
+const machines_url = "https://khale.github.io/ipi-heatmaps/machines/machines.json"
+
+$.getJSON(machines_url, function (d) {
+    $.each(d, function(key, entry) {
+        dropdown.append($('<option></option>').attr('value', entry).text(entry));
+    })
+});
+
 
 // set the dimensions and margins of the graph
 var margin = {top: 80, right: 25, bottom: 30, left: 40},
