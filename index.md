@@ -4,6 +4,12 @@ This page shows a latency matrix for one-way inter-processor interrupts (IPIs)
 between cores on several machines. Select a machine to see its latency matrix.
 Note that entries along the diagonal (self IPIs) are not included.
 
+The heat map is colored according to median latencies.  "Hotter" values
+represent higher latencies. "Cooler" values represent lower latencies. Note
+that there are a lot of outliers on the QEMU numbers, so I wouldn't give them
+too much creedence.
+
+
 {% include heatmap.html %}
 
 ## Adding more machine profiles

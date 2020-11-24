@@ -3,8 +3,8 @@ const URL_BASE = "https://khale.github.io/ipi-heatmaps"
 function drawmap(name, desc) {
     // set the dimensions and margins of the graph
     var margin = {top: 80, right: 25, bottom: 30, left: 40},
-        width = 450 - margin.left - margin.right,
-        height = 450 - margin.top - margin.bottom;
+        width = 600- margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
 
 
     // append the svg object to the body of the page
@@ -20,35 +20,36 @@ function drawmap(name, desc) {
     var url = URL_BASE + "/machines/" + name + "/" + "data.csv"
     d3.csv(url, function(data) {
 
+        data.forEach(function (d) {
+            d.sc      = parseInt(d.sc);
+            d.dc      = parseInt(d.dc);
+            d.trial   = parseInt(d.trial);
+            d.latency = parseInt(d.latency);
+        });
+
         // Labels of row and columns -> unique identifier of the column called 'group' and 'variable'
-        var myGroups = d3.map(data, function(d){return d.sc;}).keys().sort(d3.ascending)
-        var myVars = d3.map(data, function(d){return d.dc;}).keys().sort(d3.ascending)
+        var myGroups = d3.map(data, function(d){return +d.sc;}).keys().sort(function (a,b) { +a > +b })
 
-
+        
         var latsByCores = d3.nest()
-            .key(function (d) { return d.sc; }).sortKeys(d3.ascending)
-            .key(function (d) { return d.dc; }).sortKeys(d3.ascending)
+            .key(function (d) { return parseInt(d.sc); }).sortKeys(d3.ascending)
+            .key(function (d) { return parseInt(d.dc); }).sortKeys(d3.ascending)
             .rollup(function (v) { return {
-                avg: d3.mean(v, function(d) { return d.latency; }),
-                min: d3.min(v, function(d) { return d.latency; }),
-                max: d3.max(v, function(d) { return d.latency; }),
-                med: d3.median(v, function(d) { return d.latency; }),
-                std: d3.deviation(v, function(d) { return d.latency; })
+                avg: d3.mean(v, function(d) { return +d.latency; }),
+                min: d3.min(v, function(d) { return +d.latency; }),
+                max: d3.max(v, function(d) { return +d.latency; }),
+                med: d3.median(v, function(d) { return +d.latency; }),
+                std: d3.deviation(v, function(d) { return +d.latency; })
             }; })
             .map(data);
 
-        // find min,max
-        var min = Number.MAX_SAFE_INTEGER;
-        var max = 0;
-
-        for (var i = 0; i < myGroups.length; i++) {
-            for (var j = 0; j < myVars.length; j++) {
-                if (i == j) continue;
-                var val = latsByCores.get(i).get(j)['med'];
-                if (val < min) { min = val; }
-                if (val > max) { max = val; }
-            }
+        // set up the color scale
+        var center = d3.median(data, function(d) { return +d.latency; })
+        var start = 0;
+        if ((center - 1000) > 0) {
+            start = center - 1000;
         }
+        var end = center + 1000;
 
         // Build X scales and axis:
         var x = d3.scaleBand()
@@ -64,7 +65,7 @@ function drawmap(name, desc) {
         // Build Y scales and axis:
         var y = d3.scaleBand()
             .range([ height, 0 ])
-            .domain(myVars)
+            .domain(myGroups)
             .padding(0.05);
         svg.append("g")
             .style("font-size", 15)
@@ -74,7 +75,7 @@ function drawmap(name, desc) {
         // Build color scale
         var myColor = d3.scaleSequential()
             .interpolator(d3.interpolateInferno)
-            .domain([1,100000])
+            .domain([start,end])
 
         // create a tooltip
         var tooltip = d3.select("#ipi_heatmap")
@@ -119,11 +120,11 @@ function drawmap(name, desc) {
 
         // add the squares
         svg.selectAll()
-            .data(data, function(d) { return d.sc + ':' + d.dc})
+            .data(data, function(d) { return +d.sc + ':' + +d.dc})
             .enter()
             .append("rect")
-            .attr("x", function(d) { return x(d.sc) })
-            .attr("y", function(d) { return y(d.dc) })
+            .attr("x", function(d) { return x(+d.sc) })
+            .attr("y", function(d) { return y(+d.dc) })
             .attr("rx", 4)
             .attr("ry", 4)
             .attr("width", x.bandwidth() )
@@ -150,9 +151,9 @@ function drawmap(name, desc) {
         .attr("x", 0)
         .attr("y", -20)
         .attr("text-anchor", "left")
-        .style("font-size", "14px")
+        .style("font-size", "12px")
         .style("fill", "grey")
-        .style("max-width", 400)
+        .style("max-width", 600)
         .text(desc)
 }
 
