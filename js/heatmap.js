@@ -153,7 +153,6 @@ function drawmap(name, desc) {
         .attr("text-anchor", "left")
         .style("font-size", "12px")
         .style("fill", "grey")
-        .style("max-width", 600)
         .text(desc)
 }
 
