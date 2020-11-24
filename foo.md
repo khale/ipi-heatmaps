@@ -3,3 +3,5 @@
 - some
 - bullet
 - points
+
+{% include heatmap.html %}
