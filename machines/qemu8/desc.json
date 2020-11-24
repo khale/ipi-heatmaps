@@ -1,7 +1,7 @@
 [
     {
         "name": "qemu8",
-        "desc": "QEMU 8-core emulated AMD EYPC-v3, 1G RAM"
+        "desc": "QEMU 8-core emulated AMD EYPC-v3, 2G RAM. QEMU in WSL2 guest on Ryzen 3950x Windows 10 host (two layers of virt)"
     }
 ]
 
