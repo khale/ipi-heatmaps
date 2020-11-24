@@ -33,7 +33,7 @@ function drawmap(name, desc) {
             "translate(" + margin.left + "," + margin.top + ")");
 
     //Read the data
-    var url = "https://khale.github.io/ipi-heatmaps/" + name + "/" + "data.csv"
+    var url = "https://khale.github.io/ipi-heatmaps/machines/" + name + "/" + "data.csv"
     d3.csv(url, function(data) {
 
         // Labels of row and columns -> unique identifier of the column called 'group' and 'variable'
