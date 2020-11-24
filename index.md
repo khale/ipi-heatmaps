@@ -22,7 +22,7 @@ set timeout=0
 set default=0
 
 menuentry "Nautilus" {
-    multiboot2 /boot/nautilus.bin -test ipitest "-s all -d all -t oneway -n 100"
+    multiboot2 /boot/nautilus.bin -test ipitest "-s all -d all -t oneway -n 10"
     module2 /boot/nautilus.syms
     module2 /boot/nautilus.secs
     boot
