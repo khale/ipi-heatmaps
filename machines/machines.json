@@ -1,13 +1,9 @@
 [
     {
-        "name": "QEMU4",
-        "file": "qemu4",
-        "desc": "Qemu emulated 4-core EPYC-v3"
+        "name": "qemu4"
     },
     {
-        "name": "QEMU8",
-        "file": "qemu8",
-        "desc": "Qemu emulated 8-core EPYC-v3"
+        "name": "qemu8"
     }
 ]
 
