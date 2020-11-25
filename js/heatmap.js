@@ -3,8 +3,8 @@ const URL_BASE = "https://khale.github.io/ipi-heatmaps"
 function drawmap(name, desc) {
     // set the dimensions and margins of the graph
     var margin = {top: 80, right: 25, bottom: 30, left: 40},
-        width = 800- margin.left - margin.right,
-        height = 800 - margin.top - margin.bottom;
+        width = document.getElementById("ipi_heatmap") - margin.left - margin.right,
+        height = document.getElementById("ipi_heatmap") - margin.top - margin.bottom;
 
 
     // append the svg object to the body of the page

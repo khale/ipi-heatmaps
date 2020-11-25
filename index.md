@@ -2,7 +2,8 @@
 
 This page shows a latency matrix for one-way inter-processor interrupts (IPIs)
 between cores on several machines. Select a machine to see its latency matrix.
-Note that entries along the diagonal (self IPIs) are not included.
+Note that entries along the diagonal (self IPIs) are not included. This is implemented
+in a pretty dumb way, so the matrices for the larger machines may take some time to load. 
 
 The heat map is colored according to median latencies.  "Hotter" values
 represent higher latencies. "Cooler" values represent lower latencies. Note
