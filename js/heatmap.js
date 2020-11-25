@@ -57,7 +57,7 @@ function drawmap(name, desc) {
             .domain(myGroups)
             .padding(0.05);
         svg.append("g")
-            .style("font-size", 15)
+            .style("font-size", 12)
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x).tickSize(0))
             .select(".domain").remove()
@@ -68,7 +68,7 @@ function drawmap(name, desc) {
             .domain(myGroups)
             .padding(0.05);
         svg.append("g")
-            .style("font-size", 15)
+            .style("font-size", 12)
             .call(d3.axisLeft(y).tickSize(0))
             .select(".domain").remove()
 
@@ -98,7 +98,7 @@ function drawmap(name, desc) {
         }
         var mousemove = function(d) {
             tooltip
-                .html(
+                .html("Source core: " + d.sc + "; Destination core: " + d.dc + "<br/>" + 
                     "<ul>" + 
                     "<li>Mean: " + latsByCores.get(d.sc).get(d.dc)['avg'] + "</li>" + 
                     "<li>Median: " + latsByCores.get(d.sc).get(d.dc)['med'] + "</li>" + 
